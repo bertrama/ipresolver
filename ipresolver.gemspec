@@ -36,5 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rack'
   spec.add_development_dependency 'actionpack'
   spec.add_development_dependency 'rerun'
+  spec.add_development_dependency 'puma'
 
 end
