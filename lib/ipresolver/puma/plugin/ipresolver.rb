@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puma/plugin'
 require 'ipresolver'
 require 'ipresolver/puma/dsl'

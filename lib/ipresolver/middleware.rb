@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 require 'ipaddr'
 
 module Ipresolver
+  # The Rack Middleware provided by ipresolver.
   class Middleware
     REMOTE_ADDR = 'REMOTE_ADDR'
     X_FORWARDED_FOR = 'HTTP_X_FORWARDED_FOR'
-    TRUSTED_PROXIES = [
-      '127.0.0.1/16'
-    ]
+    TRUSTED_PROXIES = ['127.0.0.1/16'].freeze
 
     attr_accessor :app, :proxies
 
@@ -40,14 +41,14 @@ module Ipresolver
     def resolve(ips)
       return nil unless ips
       return ips.last if ips.length <= 1
-      return ips.last unless candidate = ipaddr(ips.last)
+      return ips.last unless (candidate = ipaddr(ips.last))
       return ips.last unless proxies.any? { |proxy| proxy.include?(candidate) }
       resolve(ips.slice(0, ips.length - 1))
     end
 
-    def ipaddr(ip)
-      IPAddr.new(ip)
-    rescue
+    def ipaddr(ip_address)
+      IPAddr.new(ip_address)
+    rescue StandardError => _
       nil
     end
   end
